@@ -3,7 +3,6 @@ import { describe, test, expect } from "vitest"
 
 import PageContainer from "./PageContainer"
 
-
 describe("PageContainer", () => {
     test("PageContainer renders correctly", () => {
         render(
@@ -12,7 +11,7 @@ describe("PageContainer", () => {
             </PageContainer>
         )
 
-        const titleElement = screen.getByRole('heading')
+        const titleElement = screen.getByRole("heading")
         expect(titleElement).toBeInTheDocument()
     })
 })

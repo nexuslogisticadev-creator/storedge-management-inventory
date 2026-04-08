@@ -3,7 +3,6 @@ import { describe, test, expect } from "vitest"
 
 import Section from "./Section"
 
-
 describe("Section", () => {
     test("Section renders correctly", () => {
         render(
@@ -12,7 +11,7 @@ describe("Section", () => {
             </Section>
         )
 
-        const titleElement = screen.getByRole('heading')
+        const titleElement = screen.getByRole("heading")
         expect(titleElement).toBeInTheDocument()
     })
 })
