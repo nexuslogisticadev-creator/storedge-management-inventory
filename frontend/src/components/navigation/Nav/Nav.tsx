@@ -1,38 +1,36 @@
-import { FaUser, FaUserPlus } from 'react-icons/fa';
-import LogoStoredge from '../../../assets/logo.png';
+import { FaUser, FaUserPlus } from "react-icons/fa"
+import LogoStoredge from "../../../assets/logo.png"
 
-import Container from '../../containers/Container/Container';
-import Link from '../Link/Link';
-import Img from './Img/Img';
+import Container from "../../containers/Container/Container"
+import { Link } from "@/components/ui/link"
+import Img from "./Img/Img"
 
-export default function Nav() {
-    const linkStyles = 'hover:underline '; // classes dos estilos do link
-
+export default function Nav({
+    navLinks
+}: {
+    navLinks: { label: string; href: string }[]
+}) {
     return (
         <nav className="flex items-center justify-between gap-4 border-b px-4 lg:px-[10%] [&_div]:flex [&_div]:gap-2">
-            <a href="/" className="aspect-square size-14 shrink-0">
+            <a href="/" className="aspect-square size-16 shrink-0 p-2">
                 <Img alt="Logo StorEdge" src={LogoStoredge} />
             </a>
             <Container>
-                <Link className={linkStyles} href="#inicio">
-                    Início
-                </Link>
-                <Link className={linkStyles} href="#sobre">
-                    Sobre
-                </Link>
-                <Link className={linkStyles} href="#suporte">
-                    Suporte
-                </Link>
+                {navLinks.map((link) => (
+                    <Link key={link.label} variant="link" href={link.href}>
+                        {link.label}
+                    </Link>
+                ))}
             </Container>
 
             <Container>
-                <Link className={linkStyles} href="/login">
+                <Link href="/login">
                     Login <FaUser />
                 </Link>
-                <Link className={linkStyles} href="/registro">
+                <Link href="/registro">
                     Registar <FaUserPlus />
                 </Link>
             </Container>
         </nav>
-    );
+    )
 }

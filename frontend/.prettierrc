@@ -3,8 +3,8 @@
     "tailwindFunctions": ["cn"],
     "tabWidth": 4,
     "useTabs": false,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": false,
+    "trailingComma": "none",
     "printWidth": 80
 }

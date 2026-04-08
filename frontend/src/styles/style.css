@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -123,16 +123,22 @@
     label {
         @apply text-sm;
     }
+    h1 {
+        @apply text-h1;
+    }
+    h2 {
+        @apply text-h2;
+    }
+    h3 {
+        @apply text-h3;
+    }
 }
-@utility text-title-primary {
+@utility text-h1 {
     @apply text-2xl font-bold;
 }
-@utility text-title-secondary {
+@utility text-h2 {
     @apply text-xl font-bold;
 }
-@utility text-title-tertiary {
+@utility text-h3 {
     @apply text-lg font-bold;
-}
-@utility text-title {
-    @apply text-2xl font-bold;
 }
