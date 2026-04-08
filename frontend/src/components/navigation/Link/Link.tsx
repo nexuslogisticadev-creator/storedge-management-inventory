@@ -1,9 +1,9 @@
-import type { LinkProps } from './Link.types'
+import type { LinkProps } from "./Link.types"
 
 export default function Link({ className, href, children, target }: LinkProps) {
     return (
         <a
-            className={`${className} flex justify-center items-center`}
+            className={`${className} flex items-center justify-center`}
             target={target}
             href={href}
         >
