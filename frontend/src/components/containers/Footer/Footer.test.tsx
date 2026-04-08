@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react"
 import { describe, test, expect } from "vitest"
 import Footer from "./Footer"
 
-
 describe("Footer", () => {
     test("Footer renders correctly", () => {
         render(
@@ -11,7 +10,7 @@ describe("Footer", () => {
             </Footer>
         )
 
-        const titleElement = screen.getByRole('heading')
+        const titleElement = screen.getByRole("heading")
         expect(titleElement).toBeInTheDocument()
     })
 })

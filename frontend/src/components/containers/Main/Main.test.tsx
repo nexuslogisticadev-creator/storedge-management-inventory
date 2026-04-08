@@ -3,7 +3,6 @@ import { describe, test, expect } from "vitest"
 
 import Main from "./Main"
 
-
 describe("Main", () => {
     test("Main renders correctly", () => {
         render(
@@ -12,10 +11,10 @@ describe("Main", () => {
             </Main>
         )
 
-        const mainElement = screen.getByRole('main')
+        const mainElement = screen.getByRole("main")
         expect(mainElement).toBeInTheDocument()
 
-        const titleElement = screen.getByRole('heading')
+        const titleElement = screen.getByRole("heading")
         expect(titleElement).toBeInTheDocument()
     })
 })

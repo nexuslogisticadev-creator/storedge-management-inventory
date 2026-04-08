@@ -1,5 +1,5 @@
 export interface ImgProps {
-    className?: string;
-    alt: string;
-    src: string;
+    className?: string
+    alt: string
+    src: string
 }

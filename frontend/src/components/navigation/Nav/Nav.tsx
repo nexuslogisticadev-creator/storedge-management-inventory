@@ -11,7 +11,7 @@ export default function Nav({
     navLinks: { label: string; href: string }[]
 }) {
     return (
-        <nav className="flex items-center justify-between gap-4 border-b px-4 lg:px-[10%] [&_div]:flex [&_div]:gap-2">
+        <nav className="flex items-center justify-between gap-2 border-b px-4 lg:px-[10%] [&_div]:flex [&_div]:gap-2">
             <a href="/" className="aspect-square size-16 shrink-0 p-2">
                 <Img alt="Logo StorEdge" src={LogoStoredge} />
             </a>
@@ -28,7 +28,7 @@ export default function Nav({
                     Login <FaUser />
                 </Link>
                 <Link href="/registro">
-                    Registar <FaUserPlus />
+                    Criar <FaUserPlus />
                 </Link>
             </Container>
         </nav>
