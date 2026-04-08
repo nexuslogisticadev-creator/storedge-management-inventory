@@ -1,56 +1,38 @@
-import { FaUser, FaUserPlus } from "react-icons/fa"
-import LogoStoredge from "../../../assets/logo.png"
+import { FaUser, FaUserPlus } from 'react-icons/fa';
+import LogoStoredge from '../../../assets/logo.png';
 
-import Container from "../../containers/Container/Container"
-import Link from "../Link/Link"
-import Img from "./Img/Img"
-
+import Container from '../../containers/Container/Container';
+import Link from '../Link/Link';
+import Img from './Img/Img';
 
 export default function Nav() {
-    const linkStyles = "" // classes dos estilos do link
-    
+    const linkStyles = 'hover:underline '; // classes dos estilos do link
+
     return (
-        <nav>
+        <nav className="flex items-center justify-between gap-4 border-b px-4 lg:px-[10%] [&_div]:flex [&_div]:gap-2">
+            <a href="/" className="aspect-square size-14 shrink-0">
+                <Img alt="Logo StorEdge" src={LogoStoredge} />
+            </a>
             <Container>
-                <Img
-                    className="w-14" // Ajute o quanto achar necessário
-                    alt="Logo StorEdge"
-                    src={LogoStoredge}
-                />
-                <Link
-                    className={linkStyles}
-                    href="#inicio"
-                >
+                <Link className={linkStyles} href="#inicio">
                     Início
                 </Link>
-                <Link
-                    className={linkStyles}
-                    href="#sobre"
-                >
+                <Link className={linkStyles} href="#sobre">
                     Sobre
                 </Link>
-                <Link
-                    className={linkStyles}
-                    href="#suporte"
-                >
+                <Link className={linkStyles} href="#suporte">
                     Suporte
                 </Link>
             </Container>
 
-            <Container> {/* 'className' por onde serão injetadas as classes tailwind  */}
-                <Link
-                    className={linkStyles}
-                    href="/login"
-                >
+            <Container>
+                <Link className={linkStyles} href="/login">
                     Login <FaUser />
                 </Link>
-                <Link
-                    className={linkStyles}
-                    href="/registro"
-                >
+                <Link className={linkStyles} href="/registro">
                     Registar <FaUserPlus />
                 </Link>
             </Container>
         </nav>
-    )
+    );
 }
