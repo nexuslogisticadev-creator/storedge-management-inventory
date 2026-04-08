@@ -1,18 +1,17 @@
 import express from "express";
 import cors from "cors";
+import authRoutes from './routes/auth.routes';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/auth', authRoutes);
 
 // rota básica só pra testar
 app.get("/", (req, res) => {
   res.send("Servidor funcionando 🚀");
 });
 
-app.listen(3000, () => {
-  console.log("Backend rodando na porta 3000");
-});
 //rota para listar produtos
 app.get("/produtos/:id", (req, res) => {
   const { id } = req.params; // pega o ID da URL
@@ -50,4 +49,12 @@ app.put("/produtos/:id", (req, res) => {
 app.delete("/produtos/:id", (req, res) => {
   const { id } = req.params;
   res.json({ message: `Produto ${id} removido com sucesso` });
+});
+
+app.use('/auth', authRoutes);
+
+
+
+app.listen(3000, () => {
+  console.log("Backend rodando na porta 3000");
 });
