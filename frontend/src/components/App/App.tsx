@@ -1,9 +1,4 @@
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Navigate
-} from "react-router-dom"
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 
 import type { AppProps } from "./App.types"
 
