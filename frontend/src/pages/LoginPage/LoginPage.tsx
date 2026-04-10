@@ -61,20 +61,20 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
                     className="flex flex-col gap-4"
                 >
                     <Container className="relative space-y-2">
-                        <label htmlFor="name" className="text-sm font-medium">
-                            Nome
+                        <label htmlFor="email" className="text-sm font-medium">
+                            Email
                         </label>
                         <Input
-                            id="name"
-                            type="text"
-                            placeholder="Digite seu nome"
+                            id="email"
+                            type="email"
+                            placeholder="Digite seu email"
                             autoComplete="username"
-                            aria-invalid={!!errors.name}
-                            {...register("name", { required: true })}
+                            aria-invalid={!!errors.email}
+                            {...register("email", { required: true })}
                         />
-                        {errors.name && (
+                        {errors.email && (
                             <span className="text-destructive absolute -bottom-3.5 left-0 text-sm">
-                                Nome é obrigatório
+                                Email é obrigatório
                             </span>
                         )}
                     </Container>
