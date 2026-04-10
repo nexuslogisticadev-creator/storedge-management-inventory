@@ -13,4 +13,48 @@ model User {
   email      String   @unique
   password   String
   created_at DateTime @default(now())
+  tokens     Token[]
+  categorias Categoria[]
+}
+
+model Token {
+  id         String   @id @default(uuid())
+  userId     String
+  token      String   @unique
+  criadoEm   DateTime @default(now())
+  expiradoEm DateTime
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model Categoria {
+  id        String    @id @default(uuid())
+  nome      String
+  descricao String
+  cor       String
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  produtos  Produto[]
+}
+
+model Produto {
+  id             String    @id @default(uuid())
+  nome           String
+  descricao      String
+  estoqueAtual   Int
+  estoqueMinimo  Int
+  categoriaId    String
+  imagemUrl      String?
+  categoria      Categoria @relation(fields: [categoriaId], references: [id])
+  combosPai      Combo[]   @relation("ProdutoPai")
+  combosFilho    Combo[]   @relation("ProdutoFilho")
+}
+
+model Combo {
+  id             String  @id @default(uuid())
+  nome           String
+  quantidadePai  Int
+  produtoPaiId   String
+  produtoFilhoId String
+  produtoPai     Produto @relation("ProdutoPai", fields: [produtoPaiId], references: [id])
+  produtoFilho   Produto @relation("ProdutoFilho", fields: [produtoFilhoId], references: [id])
 }

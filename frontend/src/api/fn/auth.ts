@@ -1,20 +1,15 @@
+import Globals from "@/shared/globals"
 import axios from "axios"
 
-export type RegisterInputs = {
-    name: string
-    email: string
-    password: string
-}
+import type { RegisterInputs } from "@/types/RegisterInputs"
+import type { LoginInputs } from "@/types/LoginInputs"
+
 export const registerUser = async (data: RegisterInputs) => {
-    const response = await axios.post("http://localhost:3000/register", data)
+    const response = await axios.post(`${Globals.baseUrl}${Globals.registerRoute}`, data)
     return response.data
 }
 
-export type LoginInputs = {
-    name: string
-    password: string
-}
 export const loginUser = async (data: LoginInputs) => {
-    const response = await axios.post("http://localhost:3000/login", data)
+    const response = await axios.post(`${Globals.baseUrl}${Globals.loginRoute}`, data)
     return response.data
 }

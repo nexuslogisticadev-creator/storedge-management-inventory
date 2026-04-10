@@ -1,23 +1,20 @@
-import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
-// 2.  o mensageiro
+import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 const prisma = new PrismaClient();
 
-// NOTA IMPORTANTE: Colocamos a palavra 'async' antes dos parâmetros.
-// Como salvar no banco demora alguns milissegundos, o código precisa ser 'assíncrono' (esperar o banco responder).
 export const register = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
     return res.status(400).json({
-      message:
-        "Por favor, preencha todos os campos (username, email, password).",
+      message: "Por favor, preencha todos os campos (username, email, password).",
     });
   }
 
   try {
-    // 3. O 'await' faz o código esperar. Vamos no banco ver se o e-mail já existe.
     const usuarioExiste = await prisma.user.findUnique({
       where: { email: email },
     });
@@ -26,19 +23,30 @@ export const register = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Este e-mail já está em uso!" });
     }
 
-    //CRIPTOGRAFIA ---
-    // 2. Geramos um "salt" (uma string aleatória que deixa a senha ainda mais forte, o nível 10 é o padrão seguro)
     const salt = await bcrypt.genSalt(10);
-    // 3. Misturamos a senha original com o salt para gerar o hash (a senha embaralhada)
     const senhaCriptografada = await bcrypt.hash(password, salt);
-    // --------------------------------
 
-    // 4. Salvamos no banco usando a senhaCriptografada no lugar da senha original
     const novoUsuario = await prisma.user.create({
       data: {
         username: username,
         email: email,
-        password: senhaCriptografada, // <- Agora o banco vai receber o código embaralhado!
+        password: senhaCriptografada,
+      },
+    });
+
+    const token = jwt.sign(
+      { id: novoUsuario.id, email: novoUsuario.email },
+      process.env.JWT_SECRET as string,
+      { expiresIn: '1h' }
+    );
+
+    const expiradoEm = new Date(Date.now() + 60 * 60 * 1000); // 1 hora
+    await prisma.token.create({
+      data: {
+        userId: novoUsuario.id,
+        token: token,
+        criadoEm: new Date(),
+        expiradoEm: expiradoEm,
       },
     });
 
@@ -50,24 +58,64 @@ export const register = async (req: Request, res: Response) => {
         email: novoUsuario.email,
         created_at: novoUsuario.created_at,
       },
+      token: token,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ message: "Erro interno no servidor." });
   }
 };
-//login
-export const login = (req: Request, res: Response) => {
+
+export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res
-      .status(400)
-      .json({ message: "E-mail e senha são obrigatórios para o login." });
+    return res.status(400).json({ message: "Por favor, preencha todos os campos (email, password)." });
   }
 
-  return res.status(200).json({
-    message: "Login realizado com sucesso!",
-    token: "aqui-vai-entrar-um-token-jwt-no-futuro",
-  });
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: email },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "E-mail ou senha inválidos." });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(400).json({ message: "E-mail ou senha inválidos." });
+    }
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET as string,
+      { expiresIn: '1h' }
+    );
+
+    const expiradoEm = new Date(Date.now() + 60 * 60 * 1000); // 1 hora
+    await prisma.token.create({
+      data: {
+        userId: user.id,
+        token: token,
+        criadoEm: new Date(),
+        expiradoEm: expiradoEm,
+      },
+    });
+
+    return res.status(200).json({
+      message: "Login realizado com sucesso!",
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        created_at: user.created_at,
+      },
+      token: token,
+    });
+  } catch (error) {
+    console.error("Erro ao fazer login:", error);
+    return res.status(500).json({ message: "Erro interno do servidor." });
+  }
 };

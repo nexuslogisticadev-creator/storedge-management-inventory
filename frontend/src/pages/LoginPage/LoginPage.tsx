@@ -6,7 +6,9 @@ import PageContainer from "../../components/containers/PageContainer/PageContain
 
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { loginUser, type LoginInputs } from "@/api/fn/auth"
+import { loginUser } from "@/api/fn/auth"
+
+import type { LoginInputs } from "@/types/LoginInputs"
 import { toast } from "sonner"
 
 export default function LoginPage({ setAuthenticated }: LoginPageProps) {
@@ -23,6 +25,7 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["user"] })
             toast.success("Login realizado com sucesso!")
+            setAuthenticated(true)
             console.log(data)
         },
         onError: () => {
@@ -71,11 +74,6 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
                     </div>
 
                     <div className="relative space-y-2">
-                            required
-                        />
-                    </div>
-
-                    <div className="space-y-2">
                         <label
                             htmlFor="password"
                             className="text-sm font-medium"
@@ -95,8 +93,6 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
                                 Senha é obrigatória
                             </span>
                         )}
-                            required
-                        />
                     </div>
 
                     <Button
@@ -105,16 +101,6 @@ export default function LoginPage({ setAuthenticated }: LoginPageProps) {
                         disabled={mutation.isPending}
                     >
                         {mutation.isPending ? "Entrando..." : "Entrar"}
-                    </Button>
-                </form>
-
-                <p className="text-muted-foreground text-center text-sm">
-                    Não tem conta?{" "}
-                    <a
-                        href="/registro"
-                        className="text-primary font-medium hover:underline"
-                    >
-                        Entrar
                     </Button>
                 </form>
 

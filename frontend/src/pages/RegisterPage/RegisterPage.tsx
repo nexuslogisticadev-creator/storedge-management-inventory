@@ -23,13 +23,16 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["user"] })
             toast.success("Conta criada com sucesso!")
+            setAuthenticated(true)
         },
         onError: () => {
             toast.error("Erro ao criar conta")
         }
     })
 
-    const onSubmit: SubmitHandler<RegisterInputs> = (data) => console.log(data)
+    const onSubmit: SubmitHandler<RegisterInputs> = (data) => {
+        mutation.mutate(data)
+    }
 
     return (
         <PageContainer className="flex min-h-screen items-center justify-center px-4">
@@ -97,6 +100,14 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
                             type="password"
                             placeholder="••••••••"
                             autoComplete="new-password"
+                            aria-invalid={!!errors.password}
+                            {...register("password", { required: true })}
+                        />
+                        {errors.password && (
+                            <span className="text-destructive absolute -bottom-3.5 left-0 text-sm">
+                                Senha é obrigatória
+                            </span>
+                        )}
                     </div>
 
                     <Button
