@@ -6,7 +6,9 @@ import PageContainer from "../../components/containers/PageContainer/PageContain
 
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { loginUser, type LoginInputs } from "@/api/fn/auth"
+import { loginUser } from "@/api/fn/auth"
+
+import type { LoginInputs } from "@/types/LoginInputs"
 import { toast } from "sonner"
 
 export default function LoginPage({ setAuthenticated }: LoginPageProps) {
