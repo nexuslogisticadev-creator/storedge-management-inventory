@@ -3,6 +3,7 @@ import { useState } from "react"
 import App from "../../App/App"
 import { Toaster } from "@/components/ui/toast"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import "@/lib/theme"
 
 export default function AppWrapper() {
     const [authenticated, setAuthenticated] = useState<boolean>(false)

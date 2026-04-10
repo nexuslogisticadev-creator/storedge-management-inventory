@@ -14,6 +14,7 @@ import {
     FaBolt,
     FaCheckCircle
 } from "react-icons/fa"
+import { Button } from "@/components/ui/button"
 
 const navLinks = [
     { label: "Início", href: "#inicio" },
@@ -60,19 +61,16 @@ export default function WelcomePage() {
                     id="inicio"
                     className="relative flex flex-col items-center gap-10 text-center"
                 >
-                    <div className="absolute -z-10 h-80 w-80 rounded-full bg-linear-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30 blur-3xl" />
+                    <div className="from-primary/30 to-secondary/30 absolute -z-10 h-80 w-80 rounded-full bg-linear-to-r blur-3xl dark:opacity-90" />
 
-                    <Title
-                        level={1}
-                        className="text-4xl leading-tight font-bold lg:text-6xl"
-                    >
+                    <Title level={1} className="text-balance">
                         Controle de estoque
-                        <span className="from-primary block bg-linear-to-r to-purple-500 bg-clip-text text-transparent">
+                        <span className="to-primary from-foreground block bg-linear-to-r bg-clip-text text-transparent">
                             simples e poderoso
                         </span>
                     </Title>
 
-                    <p className="text-muted-foreground max-w-2xl text-lg">
+                    <p className="text-muted-foreground text-heading-tertiary max-w-2xl text-balance">
                         Gerencie produtos, movimentações e relatórios em uma
                         plataforma moderna, rápida e intuitiva.
                     </p>
@@ -187,7 +185,7 @@ export default function WelcomePage() {
                 </Section>
             </Main>
 
-            <Footer className="bg-gray-200 mt-24 border-t">
+            <Footer className="mt-24 border-t bg-gray-200">
                 <Container className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-3">
                     <Section className="space-y-3">
                         <Title level={3}>Contato</Title>
