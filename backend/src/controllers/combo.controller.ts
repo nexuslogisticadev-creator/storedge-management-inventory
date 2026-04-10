@@ -64,7 +64,7 @@ export const createCombo = async (req: Request, res: Response) => {
 };
 
 export const updateCombo = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   const { nome, quantidadePai, produtoPaiId, produtoFilhoId, email, token } = req.body;
 
   if (!email || !token) {
@@ -112,7 +112,7 @@ export const updateCombo = async (req: Request, res: Response) => {
 };
 
 export const deleteCombo = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   const { email, token } = req.body;
 
   if (!email || !token) {
