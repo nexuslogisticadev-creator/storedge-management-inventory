@@ -62,7 +62,7 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 
 export const updateProduct = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   const { nome, descricao, estoqueAtual, estoqueMinimo, categoriaId, imagemUrl, email, token } = req.body;
 
   if (!email || !token) {
@@ -105,7 +105,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   const { email, token } = req.body;
 
   if (!email || !token) {
@@ -206,19 +206,20 @@ export const getShoppingList = async (req: Request, res: Response) => {
 
     const products = await prisma.produto.findMany({
       where: {
-        categoria: { userId: user.id },
-        estoqueAtual: { lt: prisma.produto.fields.estoqueMinimo }
+        categoria: { userId: user.id }
       }
     });
 
-    return res.status(200).json(products);
+    const belowMin = products.filter(p => p.estoqueAtual < p.estoqueMinimo);
+
+    return res.status(200).json(belowMin);
   } catch (error) {
     return res.status(500).json({ message: "Erro ao carregar lista de compras." });
   }
 };
 
 export const sellProduct = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   const { quantidade, email, token } = req.body;
 
   try {
@@ -233,7 +234,9 @@ export const sellProduct = async (req: Request, res: Response) => {
     if (!product) return res.status(404).json({ message: "Produto não encontrado." });
 
     // Lógica de Combo: Se for um produto filho, desconta do pai
-    for (const combo of product.combosFilho) {
+    // @ts-ignore
+    const combos = product.combosFilho || [];
+    for (const combo of combos) {
       const totalADescontar = combo.quantidadePai * quantidade;
       await prisma.produto.update({
         where: { id: combo.produtoPaiId },
