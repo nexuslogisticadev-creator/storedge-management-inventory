@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -52,9 +53,9 @@
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
+    --primary: oklch(62.7% 0.265 303.9);
     --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
+    --secondary: oklch(62.3% 0.214 259.815);
     --secondary-foreground: oklch(0.205 0 0);
     --muted: oklch(0.97 0 0);
     --muted-foreground: oklch(0.556 0 0);
@@ -86,10 +87,10 @@
     --card-foreground: oklch(0.985 0 0);
     --popover: oklch(0.205 0 0);
     --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
+    --primary: oklch(62.7% 0.265 303.9);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(62.3% 0.214 259.815);
+    --secondary-foreground: oklch(0.205 0 0);
     --muted: oklch(0.269 0 0);
     --muted-foreground: oklch(0.708 0 0);
     --accent: oklch(0.269 0 0);
@@ -123,22 +124,31 @@
     label {
         @apply text-sm;
     }
+    span {
+        color: inherit;
+        line-height: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+    }
     h1 {
-        @apply text-h1;
+        @apply text-heading-primary;
     }
     h2 {
-        @apply text-h2;
+        @apply text-heading-secondary;
     }
     h3 {
-        @apply text-h3;
+        @apply text-heading-tertiary;
     }
 }
-@utility text-h1 {
-    @apply text-2xl font-bold;
+@utility text-heading-primary {
+    @apply text-4xl leading-tight font-bold lg:text-6xl;
 }
-@utility text-h2 {
-    @apply text-xl font-bold;
+@utility text-heading-secondary {
+    @apply text-xl font-bold lg:text-4xl;
 }
-@utility text-h3 {
-    @apply text-lg font-bold;
+@utility text-heading-tertiary {
+    @apply text-lg font-medium;
+}
+@utility text-heading {
+    @apply text-base font-medium;
 }
