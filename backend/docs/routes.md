@@ -13,9 +13,9 @@
 
 ```json
 {
-  "username": "string",
-  "email": "string",
-  "password": "string"
+    "username": "string",
+    "email": "string",
+    "password": "string"
 }
 ```
 
@@ -28,7 +28,7 @@
 
 ```json
 {
-  "email": "string",
-  "password": "string"
+    "email": "string",
+    "password": "string"
 }
 ```

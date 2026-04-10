@@ -1,12 +1,17 @@
 import type { RegisterPageProps } from "./RegisterPage.types"
 
+import PageContainer from "../../components/containers/PageContainer/PageContainer"
+import Container from "@/components/containers/Container/Container"
+import Link from "@/components/navigation/Link/Link"
+import Title from "@/components/ui/Title/Title"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import PageContainer from "../../components/containers/PageContainer/PageContainer"
 
-import { useForm, type SubmitHandler } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { registerUser, type RegisterInputs } from "@/api/fn/auth"
+import { useForm, type SubmitHandler } from "react-hook-form"
+import { registerUser } from "@/api/fn/auth"
+
+import type { RegisterInputs } from "@/types/RegisterInputs"
 import { toast } from "sonner"
 
 export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
@@ -36,21 +41,24 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
 
     return (
         <PageContainer className="flex min-h-screen items-center justify-center px-4">
-            <div className="bg-background w-full max-w-sm space-y-6 rounded-2xl border p-6 shadow-sm">
-                <div className="space-y-2 text-center">
-                    <h1 className="text-2xl font-semibold tracking-tight">
+            <Container className="bg-background w-full max-w-sm space-y-6 rounded-2xl border p-6 shadow-sm">
+                <Container className="space-y-2 text-center">
+                    <Title
+                        level={1}
+                        className="text-2xl font-semibold tracking-tight"
+                    >
                         Criar conta
-                    </h1>
+                    </Title>
                     <p className="text-muted-foreground text-sm">
                         Preencha os dados para começar
                     </p>
-                </div>
+                </Container>
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col gap-4"
                 >
-                    <div className="relative space-y-2">
+                    <Container className="relative space-y-2">
                         <label htmlFor="name" className="text-sm font-medium">
                             Nome
                         </label>
@@ -59,17 +67,17 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
                             type="text"
                             placeholder="Seu nome"
                             autoComplete="name"
-                            aria-invalid={!!errors.name}
-                            {...register("name", { required: true })}
+                            aria-invalid={!!errors.username}
+                            {...register("username", { required: true })}
                         />
-                        {errors.name && (
+                        {errors.username && (
                             <span className="text-destructive absolute -bottom-3.5 left-0 text-sm">
                                 Nome é obrigatório
                             </span>
                         )}
-                    </div>
+                    </Container>
 
-                    <div className="relative space-y-2">
+                    <Container className="relative space-y-2">
                         <label htmlFor="email" className="text-sm font-medium">
                             E-mail
                         </label>
@@ -86,9 +94,9 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
                                 E-mail é obrigatório
                             </span>
                         )}
-                    </div>
+                    </Container>
 
-                    <div className="relative space-y-2">
+                    <Container className="relative space-y-2">
                         <label
                             htmlFor="password"
                             className="text-sm font-medium"
@@ -108,7 +116,7 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
                                 Senha é obrigatória
                             </span>
                         )}
-                    </div>
+                    </Container>
 
                     <Button
                         type="submit"
@@ -123,14 +131,14 @@ export default function RegisterPage({ setAuthenticated }: RegisterPageProps) {
 
                 <p className="text-muted-foreground text-center text-sm">
                     Já tem conta?{" "}
-                    <a
-                        href="/login"
+                    <Link
                         className="text-primary font-medium hover:underline"
+                        href="/login"
                     >
                         Entrar
-                    </a>
+                    </Link>
                 </p>
-            </div>
+            </Container>
         </PageContainer>
     )
 }
